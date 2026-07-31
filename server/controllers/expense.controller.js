@@ -5,6 +5,7 @@ import {
   updateTransaction,
   deleteTransaction,
 } from '../models/expense.model.js';
+import { categorizeTransaction } from '../services/gemini.service.js';
 
 const VALID_TYPES = ['income', 'expense'];
 
@@ -35,12 +36,19 @@ export const addTransaction = async (req, res) => {
       });
     }
 
+    let finalCategory = category;
+
+    // Only ask AI to categorize if the user didn't provide one, and it's an expense
+    if (!finalCategory && type === 'expense') {
+      finalCategory = await categorizeTransaction(title);
+    }
+
     const transaction = await createTransaction(
       userId,
       title,
       amount,
       type,
-      category || null,
+      finalCategory || null,
       date,
       notes || null
     );
