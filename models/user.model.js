@@ -28,3 +28,35 @@ export const createLocalUser = async (fullName, email, hashedPassword) => {
   );
   return result.rows[0];
 };
+
+// Find a user by their Google ID — used to check if they've signed in with Google before
+export const findUserByGoogleId = async (googleId) => {
+  const result = await pool.query(
+    'SELECT * FROM users WHERE google_id = $1',
+    [googleId]
+  );
+  return result.rows[0];
+};
+
+// Link a Google account to an existing local account (same email)
+export const linkGoogleAccount = async (email, googleId, profilePicture) => {
+  const result = await pool.query(
+    `UPDATE users
+     SET google_id = $1, profile_picture = COALESCE(profile_picture, $2)
+     WHERE email = $3
+     RETURNING *`,
+    [googleId, profilePicture, email]
+  );
+  return result.rows[0];
+};
+
+// Create a brand new user who signed up via Google (no password)
+export const createGoogleUser = async (fullName, email, googleId, profilePicture) => {
+  const result = await pool.query(
+    `INSERT INTO users (full_name, email, google_id, auth_provider, profile_picture)
+     VALUES ($1, $2, $3, 'google', $4)
+     RETURNING *`,
+    [fullName, email, googleId, profilePicture]
+  );
+  return result.rows[0];
+};
