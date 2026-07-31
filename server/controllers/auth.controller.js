@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { findUserByEmail, createLocalUser } from '../models/user.model.js';
+import { findUserByEmail, createLocalUser, findUserById } from '../models/user.model.js';
 import { generateToken } from '../utils/jwt.utils.js';
 
 const SALT_ROUNDS = 10;
@@ -104,6 +104,31 @@ export const loginUser = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Something went wrong during login',
+    });
+  }
+};
+
+// GET /api/auth/me — returns the currently authenticated user's info
+export const getCurrentUser = async (req, res) => {
+  try {
+    const user = await findUserById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    console.error('Get current user error:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong while fetching user data',
     });
   }
 };

@@ -1,12 +1,14 @@
 import express from 'express';
 import passport from 'passport';
-import { registerUser, loginUser } from '../controllers/auth.controller.js';
+import { registerUser, loginUser, getCurrentUser } from '../controllers/auth.controller.js';
 import { generateToken } from '../utils/jwt.utils.js';
+import { protect } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
+router.get('/me', protect, getCurrentUser);
 
 // Step 1: redirect user to Google's consent screen
 router.get(
@@ -25,10 +27,7 @@ router.get(
     failureRedirect: `${process.env.CLIENT_URL}/login?error=google_auth_failed`,
   }),
   (req, res) => {
-    // At this point, req.user is the authenticated user (set by our Passport strategy)
     const token = generateToken(req.user.id);
-
-    // Redirect back to frontend with token as a query param
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
   }
 );
