@@ -7,6 +7,7 @@ import passport from './config/passport.js';
 import expenseRoutes from './routes/expense.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
 import insightsRoutes from './routes/insights.routes.js';
+import chatbotRoutes from './routes/chatbot.routes.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(passport.initialize());
 app.use('/api/expenses', expenseRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/insights', insightsRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Test Route
 app.get("/", (req, res) => {

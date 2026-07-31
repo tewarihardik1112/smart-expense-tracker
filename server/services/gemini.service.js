@@ -106,3 +106,33 @@ Spending by category: ${JSON.stringify(categoryBreakdown)}`;
     };
   }
 };
+
+// Answers a user's financial question using their transaction summary as context
+export const askChatbot = async (question, contextData) => {
+  const { totalIncome, totalExpense, balance, categoryBreakdown, recentTransactions } = contextData;
+
+  const prompt = `You are a financial assistant chatbot for an expense tracker app. Answer the user's question using ONLY the data provided below. Be concise (2-3 sentences max). If the question can't be answered from this data, say so honestly rather than guessing. Do not give generic financial/investment advice unrelated to this data.
+
+Financial Summary:
+Total Income: ${totalIncome}
+Total Expense: ${totalExpense}
+Balance: ${balance}
+Spending by category: ${JSON.stringify(categoryBreakdown)}
+Recent transactions: ${JSON.stringify(recentTransactions)}
+
+User's question: "${question}"
+
+Answer:`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-flash-latest',
+      contents: prompt,
+    });
+
+    return response.text.trim();
+  } catch (error) {
+    console.error('Gemini chatbot error:', error.message);
+    return "Sorry, I couldn't process that question right now. Please try again in a moment.";
+  }
+};
