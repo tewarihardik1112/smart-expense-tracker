@@ -5,6 +5,7 @@ import testRoutes from './routes/test.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import passport from './config/passport.js';
 import expenseRoutes from './routes/expense.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use('/api/test', testRoutes);
 app.use('/api/auth', authRoutes);
 app.use(passport.initialize());
 app.use('/api/expenses', expenseRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
