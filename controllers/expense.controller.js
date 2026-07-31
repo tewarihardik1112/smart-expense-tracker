@@ -60,15 +60,37 @@ export const addTransaction = async (req, res) => {
 };
 
 // GET /api/expenses
+// GET /api/expenses
 export const getAllTransactions = async (req, res) => {
   try {
     const userId = req.user.id;
-    const transactions = await getTransactionsByUser(userId);
+    const { type, category, startDate, endDate, search, page, limit } = req.query;
+
+    // Validate type if provided — same rule as add/edit
+    if (type && !VALID_TYPES.includes(type)) {
+      return res.status(400).json({
+        success: false,
+        message: "Type must be either 'income' or 'expense'",
+      });
+    }
+
+    const result = await getTransactionsByUser(userId, {
+      type,
+      category,
+      startDate,
+      endDate,
+      search,
+      page,
+      limit,
+    });
 
     res.status(200).json({
       success: true,
-      count: transactions.length,
-      transactions,
+      count: result.transactions.length,
+      totalCount: result.totalCount,
+      currentPage: result.currentPage,
+      totalPages: result.totalPages,
+      transactions: result.transactions,
     });
   } catch (error) {
     console.error('Get transactions error:', error.message);

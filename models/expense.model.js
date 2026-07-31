@@ -12,14 +12,74 @@ export const createTransaction = async (userId, title, amount, type, category, d
 };
 
 // Get all transactions belonging to a specific user, most recent first
-export const getTransactionsByUser = async (userId) => {
-  const result = await pool.query(
-    `SELECT * FROM transactions
-     WHERE user_id = $1
-     ORDER BY date DESC, created_at DESC`,
-    [userId]
+// Get transactions for a user, with optional filters, search, and pagination
+export const getTransactionsByUser = async (userId, filters) => {
+  const { type, category, startDate, endDate, search, page, limit } = filters;
+
+  const conditions = ['user_id = $1'];
+  const values = [userId];
+  let paramIndex = 2;
+
+  if (type) {
+    conditions.push(`type = $${paramIndex}`);
+    values.push(type);
+    paramIndex++;
+  }
+
+  if (category) {
+    conditions.push(`category = $${paramIndex}`);
+    values.push(category);
+    paramIndex++;
+  }
+
+  if (startDate) {
+    conditions.push(`date >= $${paramIndex}`);
+    values.push(startDate);
+    paramIndex++;
+  }
+
+  if (endDate) {
+    conditions.push(`date <= $${paramIndex}`);
+    values.push(endDate);
+    paramIndex++;
+  }
+
+  if (search) {
+    conditions.push(`title ILIKE $${paramIndex}`);
+    values.push(`%${search}%`);
+    paramIndex++;
+  }
+
+  const whereClause = conditions.join(' AND ');
+
+  // Get total count matching filters (for pagination metadata) — before applying LIMIT/OFFSET
+  const countResult = await pool.query(
+    `SELECT COUNT(*) FROM transactions WHERE ${whereClause}`,
+    values
   );
-  return result.rows;
+  const totalCount = parseInt(countResult.rows[0].count, 10);
+
+  // Apply pagination
+  const pageNumber = Number(page) || 1;
+  const pageSize = Number(limit) || 10;
+  const offset = (pageNumber - 1) * pageSize;
+
+  values.push(pageSize, offset);
+
+  const dataResult = await pool.query(
+    `SELECT * FROM transactions
+     WHERE ${whereClause}
+     ORDER BY date DESC, created_at DESC
+     LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`,
+    values
+  );
+
+  return {
+    transactions: dataResult.rows,
+    totalCount,
+    currentPage: pageNumber,
+    totalPages: Math.ceil(totalCount / pageSize),
+  };
 };
 
 // Get a single transaction — scoped to the owning user, so no one else can fetch it by guessing an ID
