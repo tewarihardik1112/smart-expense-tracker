@@ -54,3 +54,16 @@ export const getMonthlyBreakdown = async (userId) => {
   );
   return result.rows;
 };
+
+// Total spending grouped by category (expenses only) — for the Pie Chart
+export const getCategoryBreakdown = async (userId) => {
+  const result = await pool.query(
+    `SELECT category, SUM(amount) AS total
+     FROM transactions
+     WHERE user_id = $1 AND type = 'expense' AND category IS NOT NULL
+     GROUP BY category
+     ORDER BY total DESC`,
+    [userId]
+  );
+  return result.rows;
+};
