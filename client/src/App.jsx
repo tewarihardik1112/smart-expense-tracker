@@ -6,6 +6,8 @@ import Expenses from './pages/Expenses';
 import AuthCallback from './pages/AuthCallback';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Layout from './layouts/Layout';
+import Insights from './pages/Insights';
+import Chat from './pages/Chat';
 
 function App() {
   return (
@@ -33,6 +35,26 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+  path="/insights"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <Insights />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/chat"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <Chat />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
