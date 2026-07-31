@@ -2,8 +2,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Expenses from './pages/Expenses';
 import AuthCallback from './pages/AuthCallback';
 import ProtectedRoute from './routes/ProtectedRoute';
+import Layout from './layouts/Layout';
 
 function App() {
   return (
@@ -15,7 +17,19 @@ function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Layout>
+              <Dashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/expenses"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Expenses />
+            </Layout>
           </ProtectedRoute>
         }
       />
