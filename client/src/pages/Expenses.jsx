@@ -7,6 +7,7 @@ import {
 } from '../services/expenseService';
 import TransactionModal from '../components/TransactionModal';
 import ConfirmDialog from '../components/ConfirmDialog';
+import { AnimatePresence } from 'framer-motion';
 
 const Expenses = () => {
   const [transactions, setTransactions] = useState([]);
@@ -202,24 +203,30 @@ const Expenses = () => {
         </div>
       )}
 
-      {showModal && (
-        <TransactionModal
-          initialData={editingTransaction}
-          onSave={handleSave}
-          onClose={() => {
-            setShowModal(false);
-            setEditingTransaction(null);
-          }}
-        />
-      )}
+      <AnimatePresence>
+        {showModal && (
+          <TransactionModal
+            key="transaction-modal"
+            initialData={editingTransaction}
+            onSave={handleSave}
+            onClose={() => {
+              setShowModal(false);
+              setEditingTransaction(null);
+            }}
+          />
+        )}
+      </AnimatePresence>
 
-      {deleteTargetId && (
-        <ConfirmDialog
-          message="Are you sure you want to delete this transaction? This cannot be undone."
-          onConfirm={handleDeleteConfirm}
-          onCancel={() => setDeleteTargetId(null)}
-        />
-      )}
+      <AnimatePresence>
+        {deleteTargetId && (
+          <ConfirmDialog
+            key="confirm-dialog"
+            message="Are you sure you want to delete this transaction? This cannot be undone."
+            onConfirm={handleDeleteConfirm}
+            onCancel={() => setDeleteTargetId(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

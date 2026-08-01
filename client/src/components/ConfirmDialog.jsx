@@ -1,7 +1,19 @@
+import { motion } from 'framer-motion';
 const ConfirmDialog = ({ message, onConfirm, onCancel }) => {
-  return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-sm shadow-lg transition-colors">
+return (
+    <motion.div
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-sm shadow-lg transition-colors"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.15 }}
+      >
         <p className="text-gray-800 dark:text-gray-200 mb-4">{message}</p>
         <div className="flex justify-end gap-3">
           <button onClick={onCancel} className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
@@ -11,9 +23,8 @@ const ConfirmDialog = ({ message, onConfirm, onCancel }) => {
             Delete
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
-
 export default ConfirmDialog;
