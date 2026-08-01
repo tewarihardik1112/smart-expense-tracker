@@ -182,3 +182,4 @@ VITE_API_BASE_URL=http://localhost:5000/api
 ### Built by Hardik Tewari
 
 [![GitHub](https://img.shields.io/badge/GitHub-tewarihardik1112-181717?logo=github&logoColor=white)](https://github.com/tewarihardik1112)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/hardik-tewari-8412aa299)
