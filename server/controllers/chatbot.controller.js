@@ -17,9 +17,8 @@ export const askQuestion = async (req, res) => {
     const [totals, categoryBreakdown, recentTransactions] = await Promise.all([
       getSummaryTotals(userId),
       getCategoryBreakdown(userId),
-      getRecentTransactions(userId),
+      getRecentTransactions(userId, 25),
     ]);
-
     const totalIncome = Number(totals.total_income);
     const totalExpense = Number(totals.total_expense);
 

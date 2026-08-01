@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 // Sends a prompt to Gemini and returns the plain text response
 export const generateContent = async (prompt) => {
   const response = await ai.models.generateContent({
-    model: 'gemini-flash-latest',
+    model: 'gemini-flash-lite-latest',
     contents: prompt,
   });
 
@@ -40,7 +40,7 @@ Category:`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-flash-latest',
+      model: 'gemini-flash-lite-latest',
       contents: prompt,
     });
 
@@ -79,7 +79,7 @@ Spending by category: ${JSON.stringify(categoryBreakdown)}`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-flash-latest',
+      model: 'gemini-flash-lite-latest',
       contents: prompt,
     });
 
@@ -99,10 +99,10 @@ Spending by category: ${JSON.stringify(categoryBreakdown)}`;
   } catch (error) {
     console.error('Gemini insights error:', error.message);
     return {
-      summary: 'Unable to generate insights right now. Please try again later.',
+      summary: 'AI insights are temporarily unavailable (daily usage limit reached). Please check back tomorrow.',
       highestSpendingCategory: null,
-      savingTip: 'Unable to generate insights right now.',
-      budgetRecommendation: 'Unable to generate insights right now.',
+      savingTip: 'AI insights are temporarily unavailable (daily usage limit reached).',
+      budgetRecommendation: 'AI insights are temporarily unavailable (daily usage limit reached).',
     };
   }
 };
@@ -126,13 +126,13 @@ Answer:`;
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-flash-latest',
+      model: 'gemini-flash-lite-latest',
       contents: prompt,
     });
 
     return response.text.trim();
   } catch (error) {
     console.error('Gemini chatbot error:', error.message);
-    return "Sorry, I couldn't process that question right now. Please try again in a moment.";
+    return "The AI chatbot has reached its daily usage limit on the free tier. Please check back tomorrow.";
   }
 };

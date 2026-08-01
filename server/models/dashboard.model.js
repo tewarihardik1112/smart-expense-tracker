@@ -14,17 +14,16 @@ export const getSummaryTotals = async (userId) => {
 };
 
 // Most recent 5 transactions (any type)
-export const getRecentTransactions = async (userId) => {
+export const getRecentTransactions = async (userId, limit = 5) => {
   const result = await pool.query(
     `SELECT * FROM transactions
      WHERE user_id = $1
      ORDER BY date DESC, created_at DESC
-     LIMIT 5`,
-    [userId]
+     LIMIT $2`,
+    [userId, limit]
   );
   return result.rows;
 };
-
 // The single category with the highest total spend (expenses only)
 export const getHighestSpendingCategory = async (userId) => {
   const result = await pool.query(
