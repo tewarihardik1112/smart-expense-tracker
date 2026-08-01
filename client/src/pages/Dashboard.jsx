@@ -37,6 +37,13 @@ const Dashboard = () => {
     };
     fetchSummary();
   }, []);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const monthlyChartData =
     summary?.monthlyBreakdown.map((row) => ({
@@ -81,14 +88,18 @@ const Dashboard = () => {
                       nameKey="category"
                       cx="50%"
                       cy="50%"
-                      outerRadius={100}
-                      label={(entry) => `${entry.category}: ₹${entry.total}`}
+                      outerRadius={isMobile ? 90 : 100}
+                      label={isMobile ? false : (entry) => `${entry.category}: ₹${entry.total}`}
                     >
                       {summary.categoryBreakdown.map((_, index) => (
                         <Cell key={index} fill={CATEGORY_COLORS[index % CATEGORY_COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip />
+                    <Legend
+                      formatter={(value, entry) => `${value}: ₹${entry.payload.total}`}
+                      wrapperStyle={{ fontSize: '12px' }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               ) : (

@@ -96,14 +96,14 @@ const Expenses = () => {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-4">
         <select
           value={typeFilter}
           onChange={(e) => {
             setTypeFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
+          className="w-full sm:w-auto border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
         >
           <option value="">All Types</option>
           <option value="income">Income</option>
@@ -118,7 +118,7 @@ const Expenses = () => {
             setCategoryFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
+          className="w-full sm:w-auto border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
         />
 
         <input
@@ -129,20 +129,23 @@ const Expenses = () => {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm flex-1 min-w-[200px]"
+          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm w-full sm:w-auto flex-1 min-w-[200px]"
         />
       </div>
 
       {error && <p className="bg-red-50 text-red-600 text-sm p-2 rounded mb-3">{error}</p>}
 
       {/* Transaction list */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden transition-colors">
+      <p className="sm:hidden text-xs text-gray-400 dark:text-gray-500 mb-2 text-center">
+        ← Swipe to see more →
+      </p>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow transition-colors overflow-x-auto">
         {loading ? (
           <p className="p-6 text-gray-400 dark:text-gray-500 text-center">Loading...</p>
         ) : transactions.length === 0 ? (
           <p className="p-6 text-gray-400 dark:text-gray-500 text-center">No transactions found</p>
         ) : (
-          <table className="w-full text-sm">
+          <table className="w-full text-sm whitespace-nowrap">
             <thead className="bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-300 text-left">
               <tr>
                 <th className="p-3">Title</th>
