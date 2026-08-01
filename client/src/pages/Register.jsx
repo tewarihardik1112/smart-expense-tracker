@@ -82,7 +82,7 @@ const Register = () => {
         </button>
 
         <a
-          href="http://localhost:5000/api/auth/google"
+          href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}
           className="w-full mt-3 border border-gray-300 dark:border-gray-600 rounded p-2 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 block text-center"
         >
           Continue with Google
