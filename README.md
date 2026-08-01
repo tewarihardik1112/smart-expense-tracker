@@ -7,7 +7,6 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)
 ![Gemini API](https://img.shields.io/badge/Google_Gemini-AI-8E75B2?logo=googlegemini&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 [![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-smart--expense--tracker--nine--ebon.vercel.app-2ea44f?style=for-the-badge)](https://smart-expense-tracker-nine-ebon.vercel.app)
 
@@ -173,11 +172,13 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ## 📌 Roadmap
 
-- Automated test suite (unit + integration)
-- Custom domain
-- Multi-turn chatbot memory
-- Budget alerts and recurring transaction support
-
+- [ ] **Automated testing** — unit tests for controllers/models and integration tests for critical auth and expense flows
+- [ ] **Multi-turn chatbot memory** — allow follow-up questions that reference earlier context in the same conversation
+- [ ] **Recurring transactions** — auto-log fixed monthly expenses like subscriptions or rent
+- [ ] **Budget alerts** — notify users when spending in a category approaches a self-set limit
+- [ ] **Custom domain** — move off the default Vercel/Render subdomains
 ---
 
-Built by **Hardik Tewari**
+### Built by Hardik Tewari
+
+[![GitHub](https://img.shields.io/badge/GitHub-tewarihardik1112-181717?logo=github&logoColor=white)](https://github.com/tewarihardik1112)
