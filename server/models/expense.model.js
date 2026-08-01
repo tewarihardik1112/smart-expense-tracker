@@ -26,9 +26,9 @@ export const getTransactionsByUser = async (userId, filters) => {
     paramIndex++;
   }
 
-  if (category) {
-    conditions.push(`category = $${paramIndex}`);
-    values.push(category);
+    if (category) {
+    conditions.push(`category ILIKE $${paramIndex}`);
+    values.push(`%${category}%`);
     paramIndex++;
   }
 

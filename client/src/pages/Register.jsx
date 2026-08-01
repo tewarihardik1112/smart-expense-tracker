@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { registerUser } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Register = () => {
   const [fullName, setFullName] = useState('');
@@ -11,6 +12,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -30,9 +32,17 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">Create Account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors">
+      <button
+        onClick={toggleTheme}
+        className="fixed top-4 right-4 text-lg p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        aria-label="Toggle dark mode"
+        title="Toggle dark mode"
+      >
+        {isDark ? '☀️' : '🌙'}
+      </button>
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-sm transition-colors">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Create Account</h1>
 
         {error && (
           <p className="bg-red-50 text-red-600 text-sm p-2 rounded mb-4">{error}</p>
@@ -43,7 +53,7 @@ const Register = () => {
           placeholder="Full Name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          className="w-full border rounded p-2 mb-3"
+          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 mb-3"
           required
         />
         <input
@@ -51,7 +61,7 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border rounded p-2 mb-3"
+          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 mb-3"
           required
         />
         <input
@@ -59,7 +69,7 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border rounded p-2 mb-4"
+          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 mb-4"
           required
         />
 
@@ -71,7 +81,14 @@ const Register = () => {
           {loading ? 'Creating account...' : 'Register'}
         </button>
 
-        <p className="text-sm text-gray-500 mt-4 text-center">
+        <a
+          href="http://localhost:5000/api/auth/google"
+          className="w-full mt-3 border border-gray-300 dark:border-gray-600 rounded p-2 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 block text-center"
+        >
+          Continue with Google
+        </a>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center">
           Already have an account?{' '}
           <Link to="/login" className="text-blue-600 font-medium">Login</Link>
         </p>
