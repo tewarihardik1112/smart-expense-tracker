@@ -60,9 +60,12 @@ const Layout = ({ children }) => {
             <span className="hidden sm:inline text-sm text-gray-500 dark:text-gray-400">
               {user?.fullName || user?.full_name}
             </span>
-            <button onClick={handleLogout} className="hidden md:inline text-sm text-red-600 dark:text-red-400 font-medium">
-              Logout
-            </button>
+            <button
+  onClick={handleLogout}
+  className="hidden md:inline text-sm text-red-600 dark:text-red-400 font-medium px-3 py-1.5 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+>
+  Logout
+</button>
             {/* Hamburger button — mobile only */}
             <button
               onClick={() => setMenuOpen((prev) => !prev)}
@@ -94,11 +97,11 @@ const Layout = ({ children }) => {
               </Link>
             ))}
             <button
-              onClick={handleLogout}
-              className="text-sm text-red-600 dark:text-red-400 font-medium text-left"
-            >
-              Logout
-            </button>
+  onClick={handleLogout}
+  className="text-sm text-red-600 dark:text-red-400 font-medium text-left px-3 py-1.5 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+>
+  Logout
+</button>
           </div>
         )}
       </nav>
