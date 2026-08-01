@@ -86,7 +86,7 @@ const Expenses = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Transactions</h1>
+        <h1 className="text-2xl font-bold dark:text-white">Transactions</h1>
         <button
           onClick={handleAddClick}
           className="bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-blue-700"
@@ -103,7 +103,7 @@ const Expenses = () => {
             setTypeFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border rounded p-2 text-sm"
+          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
         >
           <option value="">All Types</option>
           <option value="income">Income</option>
@@ -118,7 +118,7 @@ const Expenses = () => {
             setCategoryFilter(e.target.value);
             setCurrentPage(1);
           }}
-          className="border rounded p-2 text-sm"
+          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm"
         />
 
         <input
@@ -129,21 +129,21 @@ const Expenses = () => {
             setSearchTerm(e.target.value);
             setCurrentPage(1);
           }}
-          className="border rounded p-2 text-sm flex-1 min-w-[200px]"
+          className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 text-sm flex-1 min-w-[200px]"
         />
       </div>
 
       {error && <p className="bg-red-50 text-red-600 text-sm p-2 rounded mb-3">{error}</p>}
 
       {/* Transaction list */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden transition-colors">
         {loading ? (
-          <p className="p-6 text-gray-400 text-center">Loading...</p>
+          <p className="p-6 text-gray-400 dark:text-gray-500 text-center">Loading...</p>
         ) : transactions.length === 0 ? (
-          <p className="p-6 text-gray-400 text-center">No transactions found</p>
+          <p className="p-6 text-gray-400 dark:text-gray-500 text-center">No transactions found</p>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-500 text-left">
+            <thead className="bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-300 text-left">
               <tr>
                 <th className="p-3">Title</th>
                 <th className="p-3">Category</th>
@@ -154,10 +154,10 @@ const Expenses = () => {
             </thead>
             <tbody>
               {transactions.map((t) => (
-                <tr key={t.id} className="border-t">
-                  <td className="p-3">{t.title}</td>
-                  <td className="p-3">{t.category || '—'}</td>
-                  <td className="p-3">{t.date.slice(0, 10)}</td>
+                <tr key={t.id} className="border-t border-gray-200 dark:border-gray-700">
+                  <td className="p-3 dark:text-gray-200">{t.title}</td>
+                  <td className="p-3 dark:text-gray-200">{t.category || '—'}</td>
+                  <td className="p-3 dark:text-gray-200">{t.date.slice(0, 10)}</td>
                   <td className={`p-3 font-medium ${t.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
                     {t.type === 'income' ? '+' : '-'}₹{Number(t.amount).toLocaleString()}
                   </td>
@@ -182,17 +182,17 @@ const Expenses = () => {
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
-            className="px-3 py-1 border rounded text-sm disabled:opacity-40"
+            className="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:text-gray-200 rounded text-sm disabled:opacity-40"
           >
             Previous
           </button>
-          <span className="px-3 py-1 text-sm text-gray-600">
+          <span className="px-3 py-1 text-sm text-gray-600 dark:text-gray-400">
             Page {currentPage} of {totalPages}
           </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
-            className="px-3 py-1 border rounded text-sm disabled:opacity-40"
+            className="px-3 py-1 border border-gray-300 dark:border-gray-600 dark:text-gray-200 rounded text-sm disabled:opacity-40"
           >
             Next
           </button>

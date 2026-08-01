@@ -35,11 +35,11 @@ const Chat = () => {
 
   return (
     <div className="max-w-2xl mx-auto flex flex-col h-[75vh]">
-      <h1 className="text-2xl font-bold mb-4">Ask Your Finances</h1>
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">Ask Your Finances</h1>
 
-      <div className="flex-1 bg-white rounded-lg shadow p-4 overflow-y-auto space-y-3">
+      <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg shadow p-4 overflow-y-auto space-y-3 transition-colors">
         {messages.length === 0 && (
-          <p className="text-gray-400 text-sm text-center mt-8">
+          <p className="text-gray-400 dark:text-gray-500 text-sm text-center mt-8">
             Try asking: "How much did I spend on food?" or "How can I save money?"
           </p>
         )}
@@ -48,7 +48,7 @@ const Chat = () => {
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
               className={`max-w-[80%] px-4 py-2 rounded-lg text-sm ${
-                msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'
+                msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
               }`}
             >
               {msg.text}
@@ -58,7 +58,7 @@ const Chat = () => {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-gray-100 text-gray-400 px-4 py-2 rounded-lg text-sm">Thinking...</div>
+            <div className="bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 px-4 py-2 rounded-lg text-sm">Thinking...</div>
           </div>
         )}
 
@@ -71,7 +71,7 @@ const Chat = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask about your spending..."
-          className="flex-1 border rounded p-2"
+          className="flex-1 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2"
         />
         <button
           type="submit"
