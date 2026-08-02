@@ -35,6 +35,16 @@ app.use('/api/chatbot', chatbotRoutes);
 app.get("/", (req, res) => {
   res.send("🚀 Smart Expense Tracker Backend is Running");
 });
+
+//Health Check Route
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is healthy",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`✅ Server is running on http://localhost:${PORT}`);
